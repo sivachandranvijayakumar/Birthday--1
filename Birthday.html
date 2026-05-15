@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Animated Background */
+
+.stars{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.star{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius:50%;
+    animation:blink 2s infinite;
+}
+
+@keyframes blink{
+    0%,100%{opacity:0.2;}
+    50%{opacity:1;}
+}
+
+/* Main Card */
+
+.card{
+    position:relative;
+    width:350px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+    color:white;
+    box-shadow:0 0 25px rgba(255,255,255,0.2);
+    z-index:10;
+    animation:zoom 1s ease;
+}
+
+@keyframes zoom{
+    from{
+        transform:scale(0.5);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.btn{
+    margin-top:20px;
+    padding:14px 28px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(45deg,#ff0080,#ff8c00);
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.4s;
+}
+
+.btn:hover{
+    transform:scale(1.08);
+}
+
+/* Hidden Page */
+
+.hidden{
+    display:none;
+}
+
+.photo{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid white;
+    margin-bottom:15px;
+    animation:float 3s infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-12px);}
+    100%{transform:translateY(0px);}
+}
+
+h1{
+    font-size:30px;
+    margin-bottom:10px;
+    color:#ffd700;
+    text-shadow:0 0 10px gold;
+}
+
+p{
+    font-size:18px;
+    line-height:1.7;
+}
+
+/* Confetti */
+
+.confetti{
+    position:absolute;
+    width:10px;
+    height:10px;
+    top:-10px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+
+/* Glow */
+
+.glow{
+    animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{
+        box-shadow:0 0 10px #fff;
+    }
+    to{
+        box-shadow:0 0 30px #ff00ff;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<div class="card glow">
+
+    <!-- First Page -->
+
+    <div id="first">
+
+        <h1>🎁 Special Link 🎁</h1>
+
+        <p>
+            Someone sent you a surprise 💖
+        </p>
+
+        <button class="btn" onclick="openWish()">
+            Open Now
+        </button>
+
+    </div>
+
+    <!-- Birthday Page -->
+
+    <div id="second" class="hidden">
+
+        <!-- YOUR IMAGE -->
+        <img src="img/2.jpg" class="photo">
+
+        <h1>🎂 Happy Birthday 🎂</h1>
+
+        <p>
+            இனிய பிறந்தநாள் வாழ்த்துக்கள் 💖<br><br>
+
+            உங்கள் வாழ்க்கை முழுவதும்<br>
+            சந்தோஷம், வெற்றி மற்றும் அன்பு<br>
+            நிரம்பியதாக இருக்கட்டும் ✨
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+
+/* Stars */
+
+for(let i=0;i<120;i++){
+
+    let star=document.createElement("div");
+
+    star.classList.add("star");
+
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+
+    star.style.animationDuration=
+    (Math.random()*3+1)+"s";
+
+    document.getElementById("stars")
+    .appendChild(star);
+}
+
+/* Open Wish */
+
+function openWish(){
+
+    document.getElementById("first")
+    .style.display="none";
+
+    document.getElementById("second")
+    .style.display="block";
+
+    /* Confetti */
+
+    for(let i=0;i<150;i++){
+
+        let c=document.createElement("div");
+
+        c.classList.add("confetti");
+
+        c.style.left=Math.random()*100+"vw";
+
+        c.style.background=
+        `hsl(${Math.random()*360},100%,50%)`;
+
+        c.style.animationDuration=
+        (Math.random()*3+2)+"s";
+
+        document.body.appendChild(c);
+
+        setTimeout(()=>{
+            c.remove();
+        },5000);
+    }
+
+    /* Music */
+
+   let audio = new Audio("audio/1.mp3");
+
+    audio.play();
+}
+
+</script>
+
+</body>
+</html>
